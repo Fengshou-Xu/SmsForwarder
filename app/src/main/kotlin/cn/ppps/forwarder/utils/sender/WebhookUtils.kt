@@ -259,7 +259,7 @@ class WebhookUtils {
                 }
             }
 
-            request.ignoreHttpsCert() //忽略https证书
+            request
                 .retryCount(SettingUtils.requestRetryTimes) //超时重试的次数
                 .retryDelay(SettingUtils.requestDelayTime * 1000) //超时重试的延迟时间
                 .retryIncreaseDelay(SettingUtils.requestDelayTime * 1000) //超时重试叠加延时
