@@ -37,7 +37,8 @@ jobs:
           test -n "$KEYSTORE_BASE64"   || { echo "缺少 Secret：KEYSTORE_BASE64";   exit 1; }
           test -n "$KEYSTORE_PASSWORD" || { echo "缺少 Secret：KEYSTORE_PASSWORD"; exit 1; }
           mkdir -p keystore
-          echo "$KEYSTORE_BASE64" | base64 -d > keystore/smsf.jks
+          # 剥掉 Windows 终端可能带入的回车/换行/空格，再解码
+          printf '%s' "$KEYSTORE_BASE64" | tr -d '\r\n ' | base64 -d > keystore/smsf.jks
           printf 'storeFile=%s\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' \
             "$GITHUB_WORKSPACE/keystore/smsf.jks" "$KEYSTORE_PASSWORD" "smsf" "$KEYSTORE_PASSWORD" \
             > keystore/keystore.properties
